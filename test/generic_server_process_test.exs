@@ -3,6 +3,9 @@ defmodule GenericServerProcessTest do
   doctest GenericServerProcess
 
   test "the truth" do
-    assert 1 + 1 == 2
+    pid = GenericServerProcess.start(KVStore)
+    GenericServerProcess.call(pid,{:put,:some_key, :some_value})
+    value =  GenericServerProcess.call(pid,{:get,:some_key})
+    assert value == :some_value
   end
 end
